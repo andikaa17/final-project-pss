@@ -1,0 +1,117 @@
+services:
+  app:
+    build: .
+    image: be_simple_lms-django
+    container_name: lms-app
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./code:/code
+      - ./media:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - REDIS_HOST=redis
+      - MONGO_HOST=mongodb
+      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672// 
+      - CELERY_RESULT_BACKEND=redis://:1234@redis:6379/0
+    depends_on:
+      - database
+      - redis
+      - mongodb
+      - rabbitmq
+
+  database:
+    image: postgres:16
+    container_name: lms-db
+    environment:
+      - POSTGRES_DB=lms_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5436:5432"
+
+  redis:
+    image: redis:7-alpine
+    container_name: lms-redis
+    command: redis-server --appendonly yes --requirepass 1234
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+
+  mongodb:
+    image: mongo:6
+    container_name: lms-mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=1234
+      - MONGO_INITDB_DATABASE=simple_lms
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: lms-rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=1234
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  celery-worker:
+    build: .
+    container_name: lms-celery-worker
+    command: celery -A lms worker --loglevel=info
+    volumes:
+      - ./code:/code
+      - ./media:/app/media
+    depends_on:
+      - redis
+      - rabbitmq
+      - database
+    environment:
+      - REDIS_HOST=redis
+      - MONGO_HOST=mongodb
+      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672// 
+      - CELERY_RESULT_BACKEND=redis://:1234@redis:6379/0
+
+  celery-beat:
+    build: .
+    container_name: lms-celery-beat
+    command: celery -A lms beat --loglevel=info
+    volumes:
+      - ./code:/code
+    depends_on:
+      - redis
+      - rabbitmq
+    environment:
+      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672//
+      - CELERY_RESULT_BACKEND=redis://:1234@redis:6379/0
+
+  flower:
+    build: .
+    container_name: lms-flower
+    command: celery -A lms flower --port=5555 --address=0.0.0.0
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - rabbitmq
+      - celery-worker
+    environment:
+      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672// 
+      - CELERY_RESULT_BACKEND=redis://:1234@redis:6379/0
+
+volumes:
+  pg_data:
+  redis_data:
+  mongo_data:
+  rabbitmq_data:
