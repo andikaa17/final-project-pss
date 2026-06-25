@@ -290,7 +290,4 @@ MONITORING
 
 Final project Simple LMS ini memberikan pengalaman berharga dalam memahami implementasi Pemrograman Sistem Skala Besar secara langsung. Proyek ini berhasil mengintegrasikan teknologi modern seperti Docker dengan 8 service, PostgreSQL sebagai database utama, JWT untuk autentikasi tiga role, serta Celery dan RabbitMQ untuk asynchronous processing pada pengiriman email, pembuatan sertifikat PDF, dan ekspor laporan CSV. Celery Beat menjalankan task periodik update statistik, dan tersedia endpoint task status untuk memantau proses async. Redis digunakan untuk cache, MongoDB untuk logging aktivitas, serta Flower dan Django Silk untuk monitoring dan profiling. Dokumentasi API tersedia via Swagger/OpenAPI. Sepanjang pengerjaan, berbagai kendala teknis berhasil diatasi, memperdalam pemahaman tentang Django REST Framework dan arsitektur microservices. Proyek ini menjadi fondasi kuat untuk pengembangan sistem modern ke depannya.
 
-```
-
-
 
