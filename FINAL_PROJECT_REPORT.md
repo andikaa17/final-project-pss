@@ -87,6 +87,7 @@ git clone https://github.com/andikaa17/final-project-pss.git
 ```bash
 docker compose up --build
 ```
+
 ![docker compose up -d](/docs/image.png)
 
 (Membangun ulang image sebelum menjalankan container, semisal kita ngambil clone git dari sini jika sudah pernah atau sudah ada tinggal langsung jalankan)
@@ -137,16 +138,14 @@ docker compose stop
 
 ![stop](/docs/image-31.png)
 
-
-
 ### 8. Akses Aplikasi
-
 
 Django Admin Panel
 
 ```text
 http://localhost:8000/admin/
 ```
+
 ![django Admin](/docs/image-6.png)
 
 Django Silk
@@ -154,6 +153,7 @@ Django Silk
 ```text
 http://localhost:8000/silk/
 ```
+
 ![silk](/docs/image-7.png)
 
 Swagger:
@@ -161,6 +161,7 @@ Swagger:
 ```text
 http://localhost:8000/api/docs
 ```
+
 ![swanger](/docs/image-8.png)
 
 Flower :
@@ -168,6 +169,7 @@ Flower :
 ```text
 http://localhost:5555/
 ```
+
 ![flower](/docs/image-9.png)
 
 Rabbit MQ :
@@ -175,6 +177,7 @@ Rabbit MQ :
 ```text
 http://localhost:15672/
 ```
+
 ![rabbitmq](/docs/image-10.png)
 
 ---
@@ -286,4 +289,8 @@ MONITORING
 ## Kesimpulan
 
 Final project Simple LMS ini memberikan pengalaman berharga dalam memahami implementasi Pemrograman Sistem Skala Besar secara langsung. Proyek ini berhasil mengintegrasikan teknologi modern seperti Docker dengan 8 service, PostgreSQL sebagai database utama, JWT untuk autentikasi tiga role, serta Celery dan RabbitMQ untuk asynchronous processing pada pengiriman email, pembuatan sertifikat PDF, dan ekspor laporan CSV. Celery Beat menjalankan task periodik update statistik, dan tersedia endpoint task status untuk memantau proses async. Redis digunakan untuk cache, MongoDB untuk logging aktivitas, serta Flower dan Django Silk untuk monitoring dan profiling. Dokumentasi API tersedia via Swagger/OpenAPI. Sepanjang pengerjaan, berbagai kendala teknis berhasil diatasi, memperdalam pemahaman tentang Django REST Framework dan arsitektur microservices. Proyek ini menjadi fondasi kuat untuk pengembangan sistem modern ke depannya.
-````
+
+```
+
+
+
