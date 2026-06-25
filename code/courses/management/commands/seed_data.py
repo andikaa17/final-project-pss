@@ -24,6 +24,8 @@ from django.contrib.auth.hashers import make_password
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User, Group  
 from courses.models import Course, CourseMember, CourseContent, Comment
+from django.utils import timezone
+import pytz
 
 
 FIRST_NAMES = [
@@ -175,12 +177,17 @@ class Command(BaseCommand):
     def _seed_admin(self):
         self.stdout.write('\n[0/6] Membuat Superuser Admin...')
         
+        wib = pytz.timezone('Asia/Jakarta')
+        now_wib = timezone.now().astimezone(wib)
+        
         admin, created = User.objects.get_or_create(
             username='admin',
             defaults={
                 'email': 'admin@lms.com',
                 'is_staff': True,
-                'is_superuser': True
+                'is_superuser': True,
+                'date_joined': now_wib,
+                'last_login': now_wib,
             }
         )
         if created:
@@ -199,6 +206,9 @@ class Command(BaseCommand):
             .values_list('username', flat=True)
         )
 
+        wib = pytz.timezone('Asia/Jakarta')
+        now_wib = timezone.now().astimezone(wib)
+
         to_create = []
         for i in range(1, 21):
             username = f'dosen{i:02d}'
@@ -212,6 +222,8 @@ class Command(BaseCommand):
                     email=f'{username}@univ.ac.id',
                     is_staff=False,
                     password=make_password('dosen123'),
+                    date_joined=now_wib,
+                    last_login=now_wib,
                 ))
 
         if to_create:
@@ -234,6 +246,9 @@ class Command(BaseCommand):
             .values_list('username', flat=True)
         )
 
+        wib = pytz.timezone('Asia/Jakarta')
+        now_wib = timezone.now().astimezone(wib)
+
         to_create = []
         for i in range(1, 81):
             username = f'mhs{i:03d}'
@@ -244,6 +259,8 @@ class Command(BaseCommand):
                     last_name=random.choice(LAST_NAMES),
                     email=f'{username}@student.univ.ac.id',
                     password=make_password('mahasiswa123'),
+                    date_joined=now_wib,
+                    last_login=now_wib,
                 ))
 
         if to_create:

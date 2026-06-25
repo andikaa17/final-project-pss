@@ -29,7 +29,7 @@ api = NinjaAPI(
 )
 
 
-# ================= USER HELPER =================
+# USER HELPER 
 
 def user_dict(user):
     return {
@@ -42,7 +42,7 @@ def user_dict(user):
     }
 
 
-# ================= AUTH =================
+# AUTH 
 
 @api.post("/auth/register", tags=["Authentication"])
 def register(request, data: RegisterIn):
@@ -112,7 +112,7 @@ def update_me(request, data: ProfileUpdateIn):
     return user_dict(user)
 
 
-# ================= COURSES =================
+# COURSES 
 
 @api.get("/courses", tags=["Courses"])
 def list_courses(request, search: Optional[str] = None):
@@ -213,7 +213,7 @@ def list_courses_cached(request, search: Optional[str] = None):
     return result
 
 
-# ================= ENROLLMENTS =================
+# ENROLLMENTS 
 
 @api.post("/enrollments", auth=auth, tags=["Enrollments"])
 def enroll(request, data: EnrollmentIn):
@@ -251,7 +251,7 @@ def progress(request, id: int, data: ProgressIn):
     return CourseContentCompletionOut.from_orm(completion)
 
 
-# ================= ASYNC TASKS =================
+# ASYNC TASKS 
 
 @api.post("/enrollments-async", auth=auth, tags=["Async Tasks"])
 def enroll_async(request, data: EnrollmentIn):
@@ -387,7 +387,7 @@ def get_task_status(request, task_id: str):
         raise HttpError(404, f"Task not found: {str(e)}")
 
 
-# ================= ANALYTICS =================
+# ANALYTICS 
 
 @api.get("/analytics/popular-courses", tags=["Analytics"])
 def popular_courses(request, limit: int = 5):

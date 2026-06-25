@@ -21,9 +21,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
-# =============================================================================
+
 # Aplikasi yang terdaftar
-# =============================================================================
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -37,9 +37,9 @@ INSTALLED_APPS = [
 ]
 
 
-# =============================================================================
+
 # Middleware
-# =============================================================================
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -73,9 +73,9 @@ TEMPLATES = [
 WSGI_APPLICATION = "lms.wsgi.application"
 
 
-# =============================================================================
+
 # Database - PostgreSQL (sesuai docker-compose.yml)
-# =============================================================================
+
 
 DATABASES = {
     "default": {
@@ -89,17 +89,17 @@ DATABASES = {
 }
 
 
-# =============================================================================
+
 # Django Silk - Konfigurasi Profiling
-# =============================================================================
+
 
 SILKY_PYTHON_PROFILER = True
 SILKY_META = True
 
 
-# =============================================================================
+
 # Password validation
-# =============================================================================
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
@@ -109,9 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# =============================================================================
+
 # Internationalization
-# =============================================================================
+
 
 LANGUAGE_CODE = "id"
 TIME_ZONE = "Asia/Jakarta"
@@ -119,9 +119,9 @@ USE_I18N = True
 USE_TZ = True
 
 
-# =============================================================================
+
 # Static dan Media files
-# =============================================================================
+
 
 STATIC_URL = "static/"
 
@@ -131,9 +131,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# =============================================================================
+
 # REDIS CACHE CONFIGURATION
-# =============================================================================
+
 
 CACHES = {
     'default': {
@@ -149,9 +149,9 @@ CACHES = {
 CACHE_TTL = 60 * 5
 
 
-# =============================================================================
+
 # MONGODB CONFIGURATION
-# =============================================================================
+
 
 MONGO_HOST = os.environ.get('MONGO_HOST', 'mongodb')
 MONGO_PORT = int(os.environ.get('MONGO_PORT', 27017))
@@ -160,9 +160,9 @@ MONGO_PASSWORD = os.environ.get('MONGO_PASSWORD', '1234')
 MONGO_DB_NAME = 'simple_lms'
 
 
-# =============================================================================
+
 # CELERY CONFIGURATION
-# =============================================================================
+
 
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://:1234@redis:6379/0')
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://:1234@redis:6379/0')
@@ -181,9 +181,9 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 
-# =============================================================================
+
 # EMAIL CONFIGURATION
-# =============================================================================
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'noreply@simplelms.com'

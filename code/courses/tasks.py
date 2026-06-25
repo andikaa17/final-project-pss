@@ -127,7 +127,7 @@ def export_course_report(course_id, requester_email, course_name):
             user.username,
             user.email,
             get_role(user),
-            user.date_joined.strftime('%Y-%m-%d %H:%M:%S') if user.date_joined else ''
+            timezone.localtime(user.date_joined).strftime('%Y-%m-%d %H:%M:%S') if user.date_joined else ''
         ])
 
     filename = f"report_course_{course_id}_{int(timezone.now().timestamp())}.csv"
