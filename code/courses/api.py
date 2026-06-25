@@ -268,7 +268,7 @@ def enroll_async(request, data: EnrollmentIn):
         roles="std",
     )
     
-    send_enrollment_email.delay(
+    task = send_enrollment_email.delay(
         request.auth.id,
         course.id,
         request.auth.email,
@@ -286,11 +286,10 @@ def enroll_async(request, data: EnrollmentIn):
     
     return {
         "message": "Enrolled successfully! Check your email for confirmation.",
-        "enrollment": CourseMemberOut.from_orm(member)
+        "enrollment": CourseMemberOut.from_orm(member),
+        "task_id": task.id
     }
 
-
-# ================= COMPLETE COURSE (TAMBAH TASK_ID) =================
 
 @api.post("/courses/{id}/complete-async", auth=auth, tags=["Async Tasks"])
 def complete_course_async(request, id: int):
@@ -299,7 +298,6 @@ def complete_course_async(request, id: int):
     is_member = CourseMember.objects.filter(course_id=course, user_id=request.auth).exists()
     if not is_member:
         raise HttpError(403, "Not enrolled in this course")
-    
     
     task = generate_certificate.delay(
         request.auth.id,
@@ -318,7 +316,6 @@ def complete_course_async(request, id: int):
         {'course_name': course.name}
     )
     
-    
     return {
         "message": "Course completed! Certificate is being generated.",
         "task_id": task.id
@@ -332,9 +329,12 @@ def export_report_async(request, id: int):
     if not (is_admin_user(request.auth) or is_course_owner(request.auth, course)):
         raise HttpError(403, "Only course teacher or admin can export reports")
     
-    export_course_report.delay(course.id, request.auth.email, course.name)
+    task = export_course_report.delay(course.id, request.auth.email, course.name)
     
-    return {"message": "Report is being generated. You will receive an email when ready."}
+    return {
+        "message": "Report is being generated. You will receive an email when ready.",
+        "task_id": task.id
+    }
 
 
 @api.post("/admin/update-stats", auth=auth, tags=["Async Tasks"])
@@ -344,12 +344,8 @@ def trigger_stats(request):
     return {"message": "Statistics update task has been queued."}
 
 
-# ================= TASK STATUS =================
-
 @api.get("/tasks/{task_id}", tags=["Async Tasks"])
 def get_task_status(request, task_id: str):
-   
-    
     try:
         task = AsyncResult(task_id)
         

@@ -1,5 +1,6 @@
 from celery import shared_task
 from django.core.mail import send_mail
+from courses.permissions import get_role
 from django.conf import settings
 from django.utils import timezone
 from io import StringIO
@@ -37,9 +38,6 @@ def generate_certificate(user_id, course_id, user_name, course_name):
     try:
         from reportlab.lib.pagesizes import letter
         from reportlab.pdfgen import canvas
-        import os
-        from django.conf import settings
-        from django.utils import timezone
 
         cert_dir = os.path.join(settings.MEDIA_ROOT, 'certificates')
         os.makedirs(cert_dir, exist_ok=True)
@@ -112,7 +110,8 @@ def export_course_report(course_id, requester_email, course_name):
 
     logger.info(f"Starting report export for course: {course_name}")
 
-    report_dir = os.path.join(MEDIA_ROOT, 'reports')
+    
+    report_dir = os.path.join(settings.MEDIA_ROOT, 'reports')
     os.makedirs(report_dir, exist_ok=True)
     logger.info(f"Report directory: {report_dir}")
 
@@ -127,7 +126,7 @@ def export_course_report(course_id, requester_email, course_name):
             idx,
             user.username,
             user.email,
-            member.roles,
+            get_role(user),
             user.date_joined.strftime('%Y-%m-%d %H:%M:%S') if user.date_joined else ''
         ])
 
@@ -137,7 +136,6 @@ def export_course_report(course_id, requester_email, course_name):
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(output.getvalue())
 
-    
     if os.path.exists(filepath):
         file_size = os.path.getsize(filepath)
         logger.info(f" Report exported successfully! Size: {file_size} bytes")

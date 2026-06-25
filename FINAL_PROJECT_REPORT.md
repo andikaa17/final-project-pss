@@ -87,6 +87,7 @@ git clone https://github.com/andikaa17/final-project-pss.git
 ```bash
 docker compose up --build
 ```
+![docker compose up -d](/docs/image.png)
 
 (Membangun ulang image sebelum menjalankan container, semisal kita ngambil clone git dari sini jika sudah pernah atau sudah ada tinggal langsung jalankan)
 
@@ -94,7 +95,7 @@ docker compose up --build
  docker compose up -d
 ```
 
-![jalankan docker ](/docs/image-22.png)
+![jalankan docker ](/docs/image-1.png)
 
 ### 3. Pastikan Container Berjalan
 
@@ -102,7 +103,7 @@ docker compose up --build
 docker ps
 ```
 
-![docker compose ps](/docs/image-21.png)
+![docker compose ps](/docs/image-2.png)
 
 ### 4. Buat migration dahulu
 
@@ -110,7 +111,7 @@ docker ps
 docker compose exec app python manage.py makemigrations
 ```
 
-![makemigrations](/docs/image-23.png)
+![makemigrations](/docs/image-3.png)
 
 ### 5. Jalankan migration
 
@@ -118,7 +119,7 @@ docker compose exec app python manage.py makemigrations
 docker compose exec app python manage.py migrate
 ```
 
-![migrate](/docs/image-24.png)
+![migrate](/docs/image-4.png)
 
 ### 6. Seed data (karena database masih kosong setelah migration)
 
@@ -126,7 +127,7 @@ docker compose exec app python manage.py migrate
 docker compose exec app python manage.py seed_data
 ```
 
-![seed_data](/docs/image-25.png)
+![seed_data](/docs/image-5.png)
 
 ### 7. Jika Ingin Memberhentikan Project
 
@@ -134,41 +135,47 @@ docker compose exec app python manage.py seed_data
 docker compose stop
 ```
 
-![stop](/docs/image-26.png)
+![stop](/docs/image-31.png)
 
-### 4. Akses Aplikasi
 
-````
+
+### 8. Akses Aplikasi
+
 
 Django Admin Panel
 
 ```text
 http://localhost:8000/admin/
-````
+```
+![django Admin](/docs/image-6.png)
 
 Django Silk
 
 ```text
 http://localhost:8000/silk/
 ```
+![silk](/docs/image-7.png)
 
 Swagger:
 
 ```text
 http://localhost:8000/api/docs
 ```
+![swanger](/docs/image-8.png)
 
 Flower :
 
 ```text
 http://localhost:5555/
 ```
+![flower](/docs/image-9.png)
 
 Rabbit MQ :
 
 ```text
 http://localhost:15672/
 ```
+![rabbitmq](/docs/image-10.png)
 
 ---
 
@@ -220,66 +227,64 @@ MONITORING
 
 ## Screenshot / Bukti Pengujian
 
-### Swagger Documentation
-
-![Swagger](/docs/image-20.png)
-
 ### Login API
 
-![Login Mahasiswa](image.png)
-![Login Dosen](/docs/image-1.png)
-![Login Admin](/docs/image-2.png)
+![Login Mahasiswa](/docs/image-11.png)
+![Login Dosen](/docs/image-12.png)
+![Login Admin](/docs/image-13.png)
 
 ### Email notification async
 
-![Mahasiswa - Enroll Async](/docs/image-3.png)
-![Dosen - Enroll Async ](/docs/image-4.png)
-![Cek di Celery Berhasil](/docs/image-5.png)
-![Log Email Terkirim](/docs/image-6.png)
+![Mahasiswa - Enroll Async](/docs/image-14.png)
+![Dosen - Enroll Async ](/docs/image-15.png)
+![Cek di Celery Berhasil](/docs/image-16.png)
+![Log Email Terkirim](/docs/image-17.png)
 
 ### Generate certificate/report async
 
-![Complete Course Mahasiswa (Generate Certificate)](/docs/image-7.png)
-![Complete Course Dosen (Generate Certificate)](/docs/image-8.png)
-![Cek Certificate di Celery Berhasil](/docs/image-9.png)
-![Cek File Certificate](/docs/image-10.png)
+![Complete Course Mahasiswa (Generate Certificate)](/docs/image-18.png)
+![Complete Course Dosen (Generate Certificate)](/docs/image-19.png)
+![Cek Certificate di Celery Berhasil](/docs/image-20.png)
+![Cek File Certificate](/docs/image-21.png)
 
-![Export Complete](/docs/image-11.png)
-![Cek Exporty di Celery Berhasil](/docs/image-12.png)
-![Cek File report](/docs/image-13.png)
+![Export Complete](/docs/image-22.png)
+![Cek Exporty di Celery Berhasil](/docs/image-23.png)
+![Cek File report](/docs/image-24.png)
 
 ### Scheduled task
 
-![Log Celery Beat Berjalan](/docs/image-14.png)
-![Cek di Flower (Task SUCCESS)](/docs/image-15.png)
-![Detail Statistics](/docs/image-16.png)
+![Log Celery Beat Berjalan](/docs/image-25.png)
+![Cek di Flower (Task SUCCESS)](/docs/image-26.png)
+![Detail Statistics](/docs/image-27.png)
 
 ### TASK STATUS ENDPOINT
 
-![Task Status Response](/docs/image-17.png)
+![Task Status Response](/docs/image-28.png)
 
 ### Flower monitoring
 
-![Flower Monitoring](/docs/image-18.png)
+![Flower Monitoring](/docs/image-29.png)
 
 ### Rabbit MQ
 
-## ![RabbitMQ Berjalan](/docs/image-19.png)
+![RabbitMQ Berjalan](/docs/image-30.png)
 
 ## Kendala dan Solusi
 
 ### Kendala
 
-- Container tidak bisa terhubung ke PostgreSQL karena konfigurasi host masih localhost
-- File hasil generate Celery tidak sinkron dengan folder host
-- Celery menggunakan Redis sebagai broker, padahal tugas meminta RabbitMQ
+- File hasil generate Celery tidak sinkron dengan folder di host karena celery-worker tidak memiliki volume mount untuk media, dan task menggunakan path relatif sehingga file tersimpan di root container
+- Task export_course_report gagal dengan error NameError: name 'MEDIA_ROOT' is not defined karena MEDIA_ROOT tidak didefinisikan di dalam task, dan Celery Worker tidak membaca variable global yang didefinisikan di luar task
+- Endpoint async (enroll_async, complete_course_async, export_report_async) hanya mengembalikan pesan sukses tanpa task_id, sehingga user tidak bisa mengecek status task yang sedang berjalan
 
 ### Solusi
 
-- Mengubah HOST di settings.py menjadi database sesuai nama service di docker-compose.yml
-- Menambahkan volume mount ./media:/app/media pada service celery-worker dan menggunakan MEDIA_ROOT di tasks.py
-- Mengubah CELERY_BROKER_URL dari redis:// menjadi amqp://rabbitmq:1234@rabbitmq:5672//
+- 1. Menambahkan volume mount ./media:/app/media pada service celery-worker di docker-compose.yml
+  2. Mengubah path penyimpanan menggunakan settings.MEDIA_ROOT agar file tersimpan di /app/media/ yang ter-mount ke host
+- Mengganti MEDIA_ROOT dengan settings.MEDIA_ROOT di dalam task export_course_report, kemudian melakukan restart ulang Celery Worker agar kode terbaru terbaca
+- Menambahkan return task_id pada setiap response endpoint async dengan menyimpan hasil task.delay() terlebih dahulu, sehingga user bisa langsung mengecek status task melalui endpoint /tasks/{task_id}
 
 ## Kesimpulan
 
-FMengerjakan final project Simple LMS ini memberikan pengalaman yang sangat berharga dalam memahami implementasi Pemrograman Sistem Skala Besar secara langsung. Proyek ini berhasil mengintegrasikan berbagai teknologi modern seperti Docker untuk containerization dengan 8 service yang berjalan terintegrasi, PostgreSQL sebagai database utama, JWT untuk autentikasi dengan tiga role (Admin, Instructor, Student), serta Celery dan RabbitMQ untuk asynchronous processing dalam pengiriman email notifikasi, pembuatan sertifikat PDF, dan ekspor laporan CSV. Celery Beat digunakan untuk menjalankan task periodik seperti update statistik course secara otomatis, dan terdapat endpoint task status untuk memantau proses async yang sedang berjalan. Selain itu, Redis dimanfaatkan sebagai cache untuk optimasi query, MongoDB untuk logging aktivitas pengguna, serta Flower dan Django Silk untuk monitoring Celery dan profiling query database. Dokumentasi API tersedia melalui Swagger/OpenAPI dan seluruh konfigurasi sensitif dikelola menggunakan environment variables. Sepanjang pengerjaan, berbagai kendala teknis berhasil diatasi, mulai dari konfigurasi Docker Compose, implementasi JWT authentication, hingga integrasi Celery untuk background task. Pengalaman ini tidak hanya memperdalam pemahaman tentang Django REST Framework, tetapi juga membuka wawasan tentang bagaimana aplikasi skala enterprise dibangun dengan arsitektur microservices yang scalable, reliable, dan terintegrasi dengan berbagai teknologi pendukung. Secara keseluruhan, proyek ini menjadi fondasi yang kuat dalam memahami pengembangan sistem modern dan siap diaplikasikan pada proyek-proyek selanjutnya.
+Mengerjakan final project Simple LMS ini memberikan pengalaman yang sangat berharga dalam memahami implementasi Pemrograman Sistem Skala Besar secara langsung. Proyek ini berhasil mengintegrasikan berbagai teknologi modern seperti Docker untuk containerization dengan 8 service yang berjalan terintegrasi, PostgreSQL sebagai database utama, JWT untuk autentikasi dengan tiga role (Admin, Instructor, Student), serta Celery dan RabbitMQ untuk asynchronous processing dalam pengiriman email notifikasi, pembuatan sertifikat PDF, dan ekspor laporan CSV. Celery Beat digunakan untuk menjalankan task periodik seperti update statistik course secara otomatis, dan terdapat endpoint task status untuk memantau proses async yang sedang berjalan. Selain itu, Redis dimanfaatkan sebagai cache untuk optimasi query, MongoDB untuk logging aktivitas pengguna, serta Flower dan Django Silk untuk monitoring Celery dan profiling query database. Dokumentasi API tersedia melalui Swagger/OpenAPI dan seluruh konfigurasi sensitif dikelola menggunakan environment variables. Sepanjang pengerjaan, berbagai kendala teknis berhasil diatasi, mulai dari konfigurasi Docker Compose, implementasi JWT authentication, hingga integrasi Celery untuk background task. Pengalaman ini tidak hanya memperdalam pemahaman tentang Django REST Framework, tetapi juga membuka wawasan tentang bagaimana aplikasi skala enterprise dibangun dengan arsitektur microservices yang scalable, reliable, dan terintegrasi dengan berbagai teknologi pendukung. Secara keseluruhan, proyek ini menjadi fondasi yang kuat dalam memahami pengembangan sistem modern dan siap diaplikasikan pada proyek-proyek selanjutnya.
+````
