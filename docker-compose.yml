@@ -13,7 +13,7 @@ services:
       - DEBUG=True
       - REDIS_HOST=redis
       - MONGO_HOST=mongodb
-      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672// 
+      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://:1234@redis:6379/0
     depends_on:
       - database
@@ -80,7 +80,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - MONGO_HOST=mongodb
-      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672// 
+      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://:1234@redis:6379/0
 
   celery-beat:
@@ -107,7 +107,7 @@ services:
       - rabbitmq
       - celery-worker
     environment:
-      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672// 
+      - CELERY_BROKER_URL=amqp://rabbitmq:1234@rabbitmq:5672//
       - CELERY_RESULT_BACKEND=redis://:1234@redis:6379/0
 
 volumes:

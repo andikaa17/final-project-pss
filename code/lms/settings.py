@@ -164,7 +164,7 @@ MONGO_DB_NAME = 'simple_lms'
 # CELERY CONFIGURATION
 
 
-CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://:1234@redis:6379/0')
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'amqp://rabbitmq:1234@rabbitmq:5672//')
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://:1234@redis:6379/0')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
