@@ -94,6 +94,8 @@ docker compose stop
 ```
 ![stop](/docs/image-31.png)
 
+---
+
 ## Akun Demo
 
 | Role           | Username  | Password       |
@@ -153,6 +155,7 @@ docker compose stop
 | GET | `/api/analytics/popular-courses` | Menampilkan course paling populer |
 | GET | `/api/analytics/my-activities` | Menampilkan aktivitas user |
 
+---
 
 ### Monitoring
 
@@ -161,5 +164,9 @@ docker compose stop
 | Flower | `http://localhost:5555` | Monitoring Celery Worker |
 | RabbitMQ Management | `http://localhost:15672` | Monitoring RabbitMQ |
 
+---
+
 ## Dokumentasi Lengkap 
 dapat dilihat pada file [FINAL_PROJECT_REPORT.md](https://github.com/andikaa17/final-project-pss/blob/master/FINAL_PROJECT_REPORT.md)
+
+---
