@@ -92,6 +92,7 @@ docker compose exec app python manage.py seed_data
 ```bash
 docker compose stop
 ```
+![rabbitmq](/docs/image-10.png)
 
 ## Akun Demo
 
