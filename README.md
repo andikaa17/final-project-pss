@@ -101,7 +101,13 @@ docker compose stop
 | **Instructor** | `dosen01` | `dosen123`     |
 | **Student**    | `mhs001`  | `mahasiswa123` |
 
+ ### Swagger:
+ 
+ ```text
+ http://localhost:8000/api/docs
+ ```
 
+![swanger](/docs/image-8.png)
 
 
 ## Endpoint Utama
