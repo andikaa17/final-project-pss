@@ -3,10 +3,8 @@
 
 Simple LMS adalah sistem manajemen pembelajaran (Learning Management System) berbasis web yang dikembangkan menggunakan Django Rest Framework dan diintegrasikan dengan berbagai teknologi modern untuk mendukung pemrosesan asynchronous, caching, dan analitik. Proyek ini merupakan pengembangan dari sistem LMS dasar yang ditingkatkan dengan fitur-fitur advanced seperti Celery untuk background task, Redis untuk caching, MongoDB untuk penyimpanan log aktivitas, dan RabbitMQ sebagai message broker. Sistem ini memungkinkan pengguna dengan peran yang berbeda (Admin, Instructor, Student) untuk mengelola course, melakukan enrollment, melacak progress belajar, dan menghasilkan sertifikat serta laporan secara otomatis. Fitur-fitur tersebut diproses secara asynchronous menggunakan Celery agar pengguna tidak perlu menunggu lama.
 
----
 
 ## Model Utama :
-
 
 | Model | Keterangan |
 |-------|------------|
@@ -17,8 +15,6 @@ Simple LMS adalah sistem manajemen pembelajaran (Learning Management System) ber
 | **CourseContentCompletion** | Menyimpan progress pembelajaran berdasarkan lesson yang telah diselesaikan oleh mahasiswa. |
 | **Comment** | Menyimpan komentar yang diberikan mahasiswa pada materi pembelajaran. |
 
-
----
 
 ## Fitur Tambahan (Paket 6 - Async Processing & Notification)
 
@@ -95,7 +91,7 @@ docker compose stop
 ```
 ![stop](/docs/image-31.png)
 
----
+
 
 ## Akun Demo
 
@@ -106,7 +102,7 @@ docker compose stop
 | **Student**    | `mhs001`  | `mahasiswa123` |
 
 
----
+
 
 ## Endpoint Utama
 
@@ -156,8 +152,6 @@ docker compose stop
 | GET | `/api/analytics/popular-courses` | Menampilkan course paling populer |
 | GET | `/api/analytics/my-activities` | Menampilkan aktivitas user |
 
----
-
 ### Monitoring
 
 | Service | URL | Keterangan |
@@ -165,9 +159,9 @@ docker compose stop
 | Flower | `http://localhost:5555` | Monitoring Celery Worker |
 | RabbitMQ Management | `http://localhost:15672` | Monitoring RabbitMQ |
 
----
+
 
 ## Dokumentasi Lengkap 
 dapat dilihat pada file [FINAL_PROJECT_REPORT.md](https://github.com/andikaa17/final-project-pss/blob/master/FINAL_PROJECT_REPORT.md)
 
----
+
