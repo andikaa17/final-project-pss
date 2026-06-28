@@ -112,59 +112,59 @@ docker compose stop
 
 ## Endpoint Utama
 
-    ### Authentication
-    
-    | Method | Endpoint             |
-    | ------ | -------------------- |
-    | POST   | `/api/auth/register` |
-    | POST   | `/api/auth/login`    |
-    | POST   | `/api/auth/refresh`  |
-    | GET    | `/api/auth/me`       |
-    | PUT    | `/api/auth/me`       |
-    
-    ### Courses
-    
-    | Method | Endpoint                     |
-    | ------ | ---------------------------- |
-    | GET    | `/api/courses`               |
-    | POST   | `/api/courses`               |
-    | GET    | `/api/courses/{id}`          |
-    | PATCH  | `/api/courses/{id}`          |
-    | DELETE | `/api/courses/{id}`          |
-    | GET    | `/api/courses/{id}/contents` |
-    | GET    | `/api/courses-cached`        |
-    
-    ### Enrollments
-    
-    | Method | Endpoint                         |
-    | ------ | -------------------------------- |
-    | POST   | `/api/enrollments`               |
-    | GET    | `/api/enrollments/my-courses`    |
-    | POST   | `/api/enrollments/{id}/progress` |
-    
-    ### Async Tasks (Celery)
-    
-    | Method | Endpoint                           |
-    | ------ | ---------------------------------- |
-    | POST   | `/api/enrollments-async`           |
-    | POST   | `/api/courses/{id}/complete-async` |
-    | POST   | `/api/courses/{id}/export-async`   |
-    | POST   | `/api/admin/update-stats`          |
-    | GET    | `/api/tasks/{task_id}`             |
-    
-    ### Analytics
-    
-    | Method | Endpoint                         |
-    | ------ | -------------------------------- |
-    | GET    | `/api/analytics/popular-courses` |
-    | GET    | `/api/analytics/my-activities`   |
+  ### Authentication
+  
+  | Method | Endpoint             |
+  | ------ | -------------------- |
+  | POST   | `/api/auth/register` |
+  | POST   | `/api/auth/login`    |
+  | POST   | `/api/auth/refresh`  |
+  | GET    | `/api/auth/me`       |
+  | PUT    | `/api/auth/me`       |
+  
+  ### Courses
+  
+  | Method | Endpoint                     |
+  | ------ | ---------------------------- |
+  | GET    | `/api/courses`               |
+  | POST   | `/api/courses`               |
+  | GET    | `/api/courses/{id}`          |
+  | PATCH  | `/api/courses/{id}`          |
+  | DELETE | `/api/courses/{id}`          |
+  | GET    | `/api/courses/{id}/contents` |
+  | GET    | `/api/courses-cached`        |
+  
+  ### Enrollments
+  
+  | Method | Endpoint                         |
+  | ------ | -------------------------------- |
+  | POST   | `/api/enrollments`               |
+  | GET    | `/api/enrollments/my-courses`    |
+  | POST   | `/api/enrollments/{id}/progress` |
+  
+  ### Async Tasks (Celery)
+  
+  | Method | Endpoint                           |
+  | ------ | ---------------------------------- |
+  | POST   | `/api/enrollments-async`           |
+  | POST   | `/api/courses/{id}/complete-async` |
+  | POST   | `/api/courses/{id}/export-async`   |
+  | POST   | `/api/admin/update-stats`          |
+  | GET    | `/api/tasks/{task_id}`             |
+  
+  ### Analytics
+  
+  | Method | Endpoint                         |
+  | ------ | -------------------------------- |
+  | GET    | `/api/analytics/popular-courses` |
+  | GET    | `/api/analytics/my-activities`   |
 
-    ### Monitoring
+   ### Monitoring
    
    | Service | URL | Keterangan |
    |---------|-----|------------|
-   | Flower | `http://localhost:5555` | Monitoring Celery Worker |
-   | RabbitMQ Management | `http://localhost:15672` | Monitoring RabbitMQ |
+   | Flower | `http://localhost:5555` | 
+   | RabbitMQ Management | `http://localhost:15672` |
 
 
 ## Dokumentasi Lengkap 
