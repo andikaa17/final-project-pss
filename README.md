@@ -161,8 +161,8 @@ docker compose stop
 
    ### Monitoring
    
-   | Service | URL | Keterangan |
-   |---------|-----|------------|
+   | Service | URL | 
+   |---------|-----|
    | Flower | `http://localhost:5555` | 
    | RabbitMQ Management | `http://localhost:15672` |
 
