@@ -108,49 +108,51 @@ docker compose stop
 
 ### Authentication
 
-| Method | Endpoint | Keterangan |
-|--------|----------|------------|
-| POST | `/api/auth/register` | Registrasi user baru |
-| POST | `/api/auth/login` | Login dan mendapatkan JWT token |
-| POST | `/api/auth/refresh` | Refresh JWT token |
-| GET | `/api/auth/me` | Melihat profil user yang sedang login |
+| Method | Endpoint             | Keterangan                      |
+| ------ | -------------------- | ------------------------------- |
+| POST   | `/api/auth/register` | Registrasi pengguna baru        |
+| POST   | `/api/auth/login`    | Login dan mendapatkan JWT Token |
+| POST   | `/api/auth/refresh`  | Refresh JWT Token               |
+| GET    | `/api/auth/me`       | Melihat profil pengguna         |
+| PUT    | `/api/auth/me`       | Memperbarui profil pengguna     |
 
 ### Courses
 
-| Method | Endpoint | Keterangan |
-|--------|----------|------------|
-| GET | `/api/courses` | Menampilkan seluruh course |
-| POST | `/api/courses` | Membuat course baru (Instructor/Admin) |
-| GET | `/api/courses/{id}` | Detail course |
-| PATCH | `/api/courses/{id}` | Memperbarui data course |
-| DELETE | `/api/courses/{id}` | Menghapus course |
-| GET | `/api/courses-cached` | Menampilkan daftar course menggunakan Redis Cache |
-| GET | `/api/courses/{id}/contents` | Menampilkan seluruh materi pada course |
+| Method | Endpoint                     | Keterangan                                        |
+| ------ | ---------------------------- | ------------------------------------------------- |
+| GET    | `/api/courses`               | Menampilkan daftar course                         |
+| POST   | `/api/courses`               | Membuat course baru                               |
+| GET    | `/api/courses/{id}`          | Detail course                                     |
+| PATCH  | `/api/courses/{id}`          | Memperbarui course                                |
+| DELETE | `/api/courses/{id}`          | Menghapus course                                  |
+| GET    | `/api/courses/{id}/contents` | Menampilkan materi pada course                    |
+| GET    | `/api/courses-cached`        | Menampilkan daftar course menggunakan Redis Cache |
 
-### Enrollments & Progress
+### Enrollments
 
-| Method | Endpoint | Keterangan |
-|--------|----------|------------|
-| POST | `/api/enrollments` | Enrollment ke course |
-| GET | `/api/enrollments/my-courses` | Menampilkan course yang diikuti user |
-| POST | `/api/enrollments/{id}/progress` | Memperbarui progress pembelajaran |
+| Method | Endpoint                         | Keterangan                        |
+| ------ | -------------------------------- | --------------------------------- |
+| POST   | `/api/enrollments`               | Enrollment ke course              |
+| GET    | `/api/enrollments/my-courses`    | Menampilkan course yang diikuti   |
+| POST   | `/api/enrollments/{id}/progress` | Memperbarui progress pembelajaran |
 
 ### Async Tasks (Celery)
 
-| Method | Endpoint | Keterangan |
-|--------|----------|------------|
-| POST | `/api/enrollments-async` | Enrollment secara asynchronous dan mengirim email |
-| POST | `/api/courses/{id}/complete-async` | Menyelesaikan course dan membuat sertifikat PDF |
-| POST | `/api/courses/{id}/export-async` | Mengekspor laporan CSV secara asynchronous |
-| POST | `/api/admin/update-stats` | Menjalankan update statistik course |
-| GET | `/api/tasks/{task_id}` | Melihat status background task |
+| Method | Endpoint                           | Keterangan                                  |
+| ------ | ---------------------------------- | ------------------------------------------- |
+| POST   | `/api/enrollments-async`           | Enrollment secara asynchronous              |
+| POST   | `/api/courses/{id}/complete-async` | Generate sertifikat PDF secara asynchronous |
+| POST   | `/api/courses/{id}/export-async`   | Export laporan CSV secara asynchronous      |
+| POST   | `/api/admin/update-stats`          | Menjalankan update statistik course         |
+| GET    | `/api/tasks/{task_id}`             | Melihat status background task              |
 
 ### Analytics
 
-| Method | Endpoint | Keterangan |
-|--------|----------|------------|
-| GET | `/api/analytics/popular-courses` | Menampilkan course paling populer |
-| GET | `/api/analytics/my-activities` | Menampilkan aktivitas user |
+| Method | Endpoint                         | Keterangan                        |
+| ------ | -------------------------------- | --------------------------------- |
+| GET    | `/api/analytics/popular-courses` | Menampilkan course paling populer |
+| GET    | `/api/analytics/my-activities`   | Menampilkan aktivitas pengguna    |
+
 
 ### Monitoring
 
