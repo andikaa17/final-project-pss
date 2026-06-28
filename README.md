@@ -101,72 +101,70 @@ docker compose stop
 | **Instructor** | `dosen01` | `dosen123`     |
 | **Student**    | `mhs001`  | `mahasiswa123` |
 
- ### Swagger:
+## Swagger:
  
- ```text
- http://localhost:8000/api/docs
- ```
-
-![swanger](/docs/image-8.png)
+   ```text
+   http://localhost:8000/api/docs
+   ```
+  
+  ![swanger](/docs/image-8.png)
 
 
 ## Endpoint Utama
 
-### Authentication
+    ### Authentication
+    
+    | Method | Endpoint             |
+    | ------ | -------------------- |
+    | POST   | `/api/auth/register` |
+    | POST   | `/api/auth/login`    |
+    | POST   | `/api/auth/refresh`  |
+    | GET    | `/api/auth/me`       |
+    | PUT    | `/api/auth/me`       |
+    
+    ### Courses
+    
+    | Method | Endpoint                     |
+    | ------ | ---------------------------- |
+    | GET    | `/api/courses`               |
+    | POST   | `/api/courses`               |
+    | GET    | `/api/courses/{id}`          |
+    | PATCH  | `/api/courses/{id}`          |
+    | DELETE | `/api/courses/{id}`          |
+    | GET    | `/api/courses/{id}/contents` |
+    | GET    | `/api/courses-cached`        |
+    
+    ### Enrollments
+    
+    | Method | Endpoint                         |
+    | ------ | -------------------------------- |
+    | POST   | `/api/enrollments`               |
+    | GET    | `/api/enrollments/my-courses`    |
+    | POST   | `/api/enrollments/{id}/progress` |
+    
+    ### Async Tasks (Celery)
+    
+    | Method | Endpoint                           |
+    | ------ | ---------------------------------- |
+    | POST   | `/api/enrollments-async`           |
+    | POST   | `/api/courses/{id}/complete-async` |
+    | POST   | `/api/courses/{id}/export-async`   |
+    | POST   | `/api/admin/update-stats`          |
+    | GET    | `/api/tasks/{task_id}`             |
+    
+    ### Analytics
+    
+    | Method | Endpoint                         |
+    | ------ | -------------------------------- |
+    | GET    | `/api/analytics/popular-courses` |
+    | GET    | `/api/analytics/my-activities`   |
 
-| Method | Endpoint             | Keterangan                      |
-| ------ | -------------------- | ------------------------------- |
-| POST   | `/api/auth/register` | Registrasi pengguna baru        |
-| POST   | `/api/auth/login`    | Login dan mendapatkan JWT Token |
-| POST   | `/api/auth/refresh`  | Refresh JWT Token               |
-| GET    | `/api/auth/me`       | Melihat profil pengguna         |
-| PUT    | `/api/auth/me`       | Memperbarui profil pengguna     |
-
-### Courses
-
-| Method | Endpoint                     | Keterangan                                        |
-| ------ | ---------------------------- | ------------------------------------------------- |
-| GET    | `/api/courses`               | Menampilkan daftar course                         |
-| POST   | `/api/courses`               | Membuat course baru                               |
-| GET    | `/api/courses/{id}`          | Detail course                                     |
-| PATCH  | `/api/courses/{id}`          | Memperbarui course                                |
-| DELETE | `/api/courses/{id}`          | Menghapus course                                  |
-| GET    | `/api/courses/{id}/contents` | Menampilkan materi pada course                    |
-| GET    | `/api/courses-cached`        | Menampilkan daftar course menggunakan Redis Cache |
-
-### Enrollments
-
-| Method | Endpoint                         | Keterangan                        |
-| ------ | -------------------------------- | --------------------------------- |
-| POST   | `/api/enrollments`               | Enrollment ke course              |
-| GET    | `/api/enrollments/my-courses`    | Menampilkan course yang diikuti   |
-| POST   | `/api/enrollments/{id}/progress` | Memperbarui progress pembelajaran |
-
-### Async Tasks (Celery)
-
-| Method | Endpoint                           | Keterangan                                  |
-| ------ | ---------------------------------- | ------------------------------------------- |
-| POST   | `/api/enrollments-async`           | Enrollment secara asynchronous              |
-| POST   | `/api/courses/{id}/complete-async` | Generate sertifikat PDF secara asynchronous |
-| POST   | `/api/courses/{id}/export-async`   | Export laporan CSV secara asynchronous      |
-| POST   | `/api/admin/update-stats`          | Menjalankan update statistik course         |
-| GET    | `/api/tasks/{task_id}`             | Melihat status background task              |
-
-### Analytics
-
-| Method | Endpoint                         | Keterangan                        |
-| ------ | -------------------------------- | --------------------------------- |
-| GET    | `/api/analytics/popular-courses` | Menampilkan course paling populer |
-| GET    | `/api/analytics/my-activities`   | Menampilkan aktivitas pengguna    |
-
-
-### Monitoring
-
-| Service | URL | Keterangan |
-|---------|-----|------------|
-| Flower | `http://localhost:5555` | Monitoring Celery Worker |
-| RabbitMQ Management | `http://localhost:15672` | Monitoring RabbitMQ |
-
+    ### Monitoring
+   
+   | Service | URL | Keterangan |
+   |---------|-----|------------|
+   | Flower | `http://localhost:5555` | Monitoring Celery Worker |
+   | RabbitMQ Management | `http://localhost:15672` | Monitoring RabbitMQ |
 
 
 ## Dokumentasi Lengkap 
