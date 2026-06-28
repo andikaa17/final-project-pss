@@ -4,10 +4,10 @@ Simple LMS adalah sistem manajemen pembelajaran (Learning Management System) ber
 
 ---
 
-## Item Utama :
+## Model Utama :
 
 
-| Item | Keterangan |
+| Model | Keterangan |
 |-------|------------|
 | **User** | Menyimpan data pengguna dengan peran **Admin**, **Instructor**, dan **Student**. |
 | **Course** | Menyimpan informasi utama mengenai mata kuliah, seperti nama, deskripsi, harga, dan pengajar. |
@@ -113,16 +113,46 @@ docker compose stop
 |--------|----------|------------|
 | POST | `/api/auth/register` | Registrasi user baru |
 | POST | `/api/auth/login` | Login dan mendapatkan JWT token |
+| POST | `/api/auth/refresh` | Refresh JWT token |
+| GET | `/api/auth/me` | Melihat profil user yang sedang login |
+
+### Courses
+
+| Method | Endpoint | Keterangan |
+|--------|----------|------------|
+| GET | `/api/courses` | Menampilkan seluruh course |
+| POST | `/api/courses` | Membuat course baru (Instructor/Admin) |
+| GET | `/api/courses/{id}` | Detail course |
+| PATCH | `/api/courses/{id}` | Memperbarui data course |
+| DELETE | `/api/courses/{id}` | Menghapus course |
+| GET | `/api/courses-cached` | Menampilkan daftar course menggunakan Redis Cache |
+| GET | `/api/courses/{id}/contents` | Menampilkan seluruh materi pada course |
+
+### Enrollments & Progress
+
+| Method | Endpoint | Keterangan |
+|--------|----------|------------|
+| POST | `/api/enrollments` | Enrollment ke course |
+| GET | `/api/enrollments/my-courses` | Menampilkan course yang diikuti user |
+| POST | `/api/enrollments/{id}/progress` | Memperbarui progress pembelajaran |
 
 ### Async Tasks (Celery)
 
 | Method | Endpoint | Keterangan |
 |--------|----------|------------|
-| POST | `/api/enrollments-async` | Enrollment secara asynchronous |
-| POST | `/api/courses/{id}/complete-async` | Generate sertifikat PDF secara asynchronous |
-| POST | `/api/courses/{id}/export-async` | Export laporan CSV secara asynchronous |
+| POST | `/api/enrollments-async` | Enrollment secara asynchronous dan mengirim email |
+| POST | `/api/courses/{id}/complete-async` | Menyelesaikan course dan membuat sertifikat PDF |
+| POST | `/api/courses/{id}/export-async` | Mengekspor laporan CSV secara asynchronous |
 | POST | `/api/admin/update-stats` | Menjalankan update statistik course |
 | GET | `/api/tasks/{task_id}` | Melihat status background task |
+
+### Analytics
+
+| Method | Endpoint | Keterangan |
+|--------|----------|------------|
+| GET | `/api/analytics/popular-courses` | Menampilkan course paling populer |
+| GET | `/api/analytics/my-activities` | Menampilkan aktivitas user |
+
 
 ### Monitoring
 
@@ -132,4 +162,4 @@ docker compose stop
 | RabbitMQ Management | `http://localhost:15672` | Monitoring RabbitMQ |
 
 ## Dokumentasi Lengkap 
-dapat dilihat pada file FINAL_PROJECT_REPORT.md.
+dapat dilihat pada file FINAL_PROJECT_REPORT.md
