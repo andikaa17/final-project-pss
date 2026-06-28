@@ -162,4 +162,4 @@ docker compose stop
 | RabbitMQ Management | `http://localhost:15672` | Monitoring RabbitMQ |
 
 ## Dokumentasi Lengkap 
-dapat dilihat pada file FINAL_PROJECT_REPORT.md
+dapat dilihat pada file [FINAL_PROJECT_REPORT.md](https://github.com/andikaa17/final-project-pss/blob/master/FINAL_PROJECT_REPORT.md)
