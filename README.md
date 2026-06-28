@@ -1,5 +1,7 @@
 # Final Project Learning Management System (LMS)
 
+---
+
 Simple LMS adalah sistem manajemen pembelajaran (Learning Management System) berbasis web yang dikembangkan menggunakan Django Rest Framework dan diintegrasikan dengan berbagai teknologi modern untuk mendukung pemrosesan asynchronous, caching, dan analitik. Proyek ini merupakan pengembangan dari sistem LMS dasar yang ditingkatkan dengan fitur-fitur advanced seperti Celery untuk background task, Redis untuk caching, MongoDB untuk penyimpanan log aktivitas, dan RabbitMQ sebagai message broker. Sistem ini memungkinkan pengguna dengan peran yang berbeda (Admin, Instructor, Student) untuk mengelola course, melakukan enrollment, melacak progress belajar, dan menghasilkan sertifikat serta laporan secara otomatis. Fitur-fitur tersebut diproses secara asynchronous menggunakan Celery agar pengguna tidak perlu menunggu lama.
 
 ---
