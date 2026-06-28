@@ -96,44 +96,40 @@ docker compose stop
 
 ## Akun Demo
 
-### Admin
+| Role           | Username  | Password       |
+| -------------- | --------- | -------------- |
+| **Admin**      | `admin`   | `admin123`     |
+| **Instructor** | `dosen01` | `dosen123`     |
+| **Student**    | `mhs001`  | `mahasiswa123` |
 
-```text
-Email    : admin
-Password : admin123
-```
-
-### Instructor
-
-```text
-Email    : dosen01
-Password : dosen123
-```
-
-### Student
-
-```text
-Email    : mhs001
-Password : mahasiswa123
-```
 
 ---
 
-## Endpoint Penting
+## Endpoint Utama
 
-```http
-AUTHENTICATION
-  [Login]       POST   /api/auth/login
+### Authentication
 
-ASYNC TASKS (Celery)
-  [Enroll Async]         POST   /api/enrollments-async
-  [Complete Course]      POST   /api/courses/{id}/complete-async
-  [Export Report]        POST   /api/courses/{id}/export-async
-  [Update Stats]         POST   /api/admin/update-stats
-  [Task Status]          GET    /api/tasks/{task_id}
+| Method | Endpoint | Keterangan |
+|--------|----------|------------|
+| POST | `/api/auth/register` | Registrasi user baru |
+| POST | `/api/auth/login` | Login dan mendapatkan JWT token |
 
-MONITORING
-  [Flower]               GET    http://localhost:5555
-  [RabbitMQ]             GET    http://localhost:15672
+### Async Tasks (Celery)
 
-```
+| Method | Endpoint | Keterangan |
+|--------|----------|------------|
+| POST | `/api/enrollments-async` | Enrollment secara asynchronous |
+| POST | `/api/courses/{id}/complete-async` | Generate sertifikat PDF secara asynchronous |
+| POST | `/api/courses/{id}/export-async` | Export laporan CSV secara asynchronous |
+| POST | `/api/admin/update-stats` | Menjalankan update statistik course |
+| GET | `/api/tasks/{task_id}` | Melihat status background task |
+
+### Monitoring
+
+| Service | URL | Keterangan |
+|---------|-----|------------|
+| Flower | `http://localhost:5555` | Monitoring Celery Worker |
+| RabbitMQ Management | `http://localhost:15672` | Monitoring RabbitMQ |
+
+## Dokumentasi Lengkap 
+dapat dilihat pada file FINAL_PROJECT_REPORT.md.
